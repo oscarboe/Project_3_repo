@@ -1,65 +1,80 @@
-#include "Communication.h"
-#include "gameLogic.h"
+#include "communication.h"
+#include <stdio.h>
 
 
-
-Communication::Communication()
+void communication::send(int data)
 {
+	int fd;
 
-	wheelOneOldPos_ = 1;
-	wheelTwoOldPos_ = 1;
-	wheelThreeOldPos_ = 1;
+	fd = open("/dev/spi_driver", O_RDWR);
+	write(fd, data, 1);
+	close(fd);
+
 }
 
-void Communication::sendData()
+
+
+void communication::dataSent()
 {
-	sendWheelOne();
-	sendWheelTwo();
-	sendWheelThree();
-	dataSent();
+	int fd;
+	int dataSentbyte = 0b11111111
+
+	fd = open("/dev/spi_driver", O_RDWR);
+	write(fd, dataSentByte, 1);
+	close(fd);
+
 }
 
-void Communication::sendWheelOne()
+
+
+void communication::sendPayout(int symbolNumber)
 {
-	if (wheelOneOldPos_ != getWheelOne())
+	int fd, payoutData;
+	switch (symbolNumber)
 	{
-		//send 2x wheel number and placement
-		wheelOneOldPos_ = getWheelOne();
+	case 1:
+		payoutData = 0b10100001
+		break;
+	case 2:
+		payoutData = 0b10100010
+		break;
+	case 3:
+		payoutData = 0b10100011
+		break;
+	case 4:
+		payoutData = 0b10100100
+		break;
+	case 5:
+		payoutData = 0b10100101
+		break;
+	case 6:
+		payoutData = 0b10100111
+		break;
+	case 7:
+		payoutData = 0b10101000
+		break;
+	case 8:
+		payoutData = 0b10101001
+		break;
+	case 9:
+		payoutData = 0b10101010
+		break;
+	case 10:
+		payoutData = 0b10101011
+		break;
+	case 11:
+		payoutData = 0b10101100
+		break;
+	case 12:
+		payoutData = 0b10101101
+		break;
+	default:
+		break;
 	}
-}
 
-void Communication::sendWheelTwo()
-{
-	if (wheelOneOldPos_ != getWheelTwo())
-	{
-		//send 2x wheel number and placement
-		wheelTwoOldPos_ = getWheelTwo();
-	}
-}
+	fd = open("/dev/spi_driver", O_RDWR);
+	write(fd, payoutData, 1);
+	close(fd);
 
-void Communication::sendWheelThree()
-{
-	if (wheelThreeOldPos_ != getWheelThree())
-	{
-		//send 2x wheel number and placement
-		wheelThreeOldPos_ = getWheelThree();
-	}
-}
-
-void Communication::dataSent()
-{
-	// send 2x Bytes 11111111
-
-}
-
-
-
-void Communication::sendPayout()
-{
-	
-	getPayout();
-	// send getPayout();
-
-	resetPayout();
 }
 
