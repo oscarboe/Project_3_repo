@@ -7,7 +7,7 @@ void communication::send(int data)
 	int fd;
 
 	fd = open("/dev/spi_driver", O_RDWR);
-	write(fd, data, 1);
+	write(fd, &data, 1);
 	close(fd);
 
 }
@@ -20,7 +20,7 @@ void communication::dataSent()
 	int dataSentbyte = 0b11111111
 
 	fd = open("/dev/spi_driver", O_RDWR);
-	write(fd, dataSentByte, 1);
+	write(fd, &dataSentByte, 1);
 	close(fd);
 
 }
@@ -73,7 +73,7 @@ void communication::sendPayout(int symbolNumber)
 	}
 
 	fd = open("/dev/spi_driver", O_RDWR);
-	write(fd, payoutData, 1);
+	write(fd, &payoutData, 1);
 	close(fd);
 
 }

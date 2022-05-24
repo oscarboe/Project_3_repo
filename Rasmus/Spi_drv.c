@@ -1,21 +1,11 @@
-/*
-SPI bus nummer (Diagram evt. støttet af datablad, i RPi tilfælde er dokumentationen mindre god, men kun bus 0 er tilgængelig på HAT)
-Bus nummeret skal altså være 0
-SPI chip-select (ss) nummer (diagram)
-SPI_SS0 24 til ADC MCP3202
-SPI_SS1 26 til DAC MCP4802
-SPI max frekvens (datablad)
-max clock 0.9 MHz ADC MCP3202
-max clock 20MHz DAC MCP4802
-SPI Clock Mode (datablad)
-Logisk høj i idle CPOL = 1, CPHA = 0, Clock idle state = 1, sampler på rising og shifter på falling, spi mode 3
-*/
+
 #include <linux/cdev.h>   // cdev_add, cdev_init
 #include <linux/uaccess.h>  // copy_to_user
 #include <linux/module.h> // module_init, GPL
 #include <linux/spi/spi.h> // spi_sync,
 #define MAXLEN 32
 #define MODULE_DEBUG 1   // Enable/Disable Debug messages
+
 /* Char Driver Globals */
 static struct spi_driver spi_drv_spi_driver;
 struct file_operations spi_drv_fops;
